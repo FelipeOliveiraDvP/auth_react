@@ -50,7 +50,7 @@ class LoginForm extends Component {
                     <Button type='primary' htmlType='submit' className='login-form-button'>
                         Entrar
                     </Button>
-                    <a href='/register'>Criar nova conta</a>
+                    <a href='/register'>Criar uma nova conta</a>
                 </Form.Item>      
             </Form>         
         );
