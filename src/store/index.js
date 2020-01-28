@@ -1,6 +1,12 @@
 import { createStore } from 'redux';
 
-import userReducer from '../reducers/userReducer'
+const userInitialState = {
+    name: ''
+}
+
+const userReducer = (state = userInitialState, action) => {
+
+}
 
 const store = createStore(userReducer)
 

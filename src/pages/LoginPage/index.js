@@ -9,7 +9,7 @@ class LoginPage extends Component {
     render() {
         return (
             <LoginLayout>
-                <LoginForm />
+                <LoginForm history={this.props.history} />
             </LoginLayout>
         );
     }

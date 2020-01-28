@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { withRouter } from 'react-router-dom';
 
 import './style.css';
+
+import AuthService from '../../services/authService'
 
 class LoginForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
-            if(!err) {
-                console.log('Received values of form:', values);
+            if (!err) {
+                const credentials = {
+                    username: values.username,
+                    password: values.password
+                }
+                AuthService.login(credentials).then(res => {
+                    if (res.data) {
+                        localStorage.setItem('userInfo', JSON.stringify(res.data))
+                        console.log(JSON.stringify(res.data))
+                        this.props.history.push('/home')
+                    }
+                }).catch((error) => {
+                    // TODO: Show error 
+                })
             }
         })
     }
@@ -22,8 +37,8 @@ class LoginForm extends Component {
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Informe o nome de usuário' }]
                     })(
-                        <Input 
-                            prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        <Input
+                            prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
                             placeholder='Usuário'
                         />
                     )}
@@ -32,17 +47,17 @@ class LoginForm extends Component {
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: 'Informe a senha' }]
                     })(
-                        <Input 
-                            prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        <Input
+                            prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
                             type='password'
                             placeholder='Senha'
                         />
                     )}
-                </Form.Item>  
+                </Form.Item>
                 <Form.Item>
                     {getFieldDecorator('remember', {
                         valuePropName: 'checked',
-                        initialValue: true    
+                        initialValue: true
                     })(<Checkbox>Lembrar de mim</Checkbox>)}
                     <a href='/forgot' className='login-form-forgot'>
                         Esqueci minha senha
@@ -51,11 +66,12 @@ class LoginForm extends Component {
                         Entrar
                     </Button>
                     <a href='/register'>Criar uma nova conta</a>
-                </Form.Item>      
-            </Form>         
+                </Form.Item>
+            </Form>
         );
     }
 }
 
 const WrappedLoginForm = Form.create({ name: 'login_form' })(LoginForm);
-export default WrappedLoginForm;
+
+export default withRouter(WrappedLoginForm)
