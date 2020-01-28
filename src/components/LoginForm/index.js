@@ -13,18 +13,18 @@ class LoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const credentials = {
-                    username: values.username,
+                    email: values.username,
                     password: values.password
                 }
-                AuthService.login(credentials).then(res => {
-                    if (res.data) {
-                        localStorage.setItem('userInfo', JSON.stringify(res.data))
-                        console.log(JSON.stringify(res.data))
-                        this.props.history.push('/home')
-                    }
-                }).catch((error) => {
-                    // TODO: Show error 
-                })
+                AuthService.login(JSON.stringify(credentials))
+                    .then(res => {
+                        if (res.data) {
+                            localStorage.setItem('userInfo', JSON.stringify(res.data))
+                            this.props.history.push('/home')
+                        }
+                    }).catch((error) => {
+                        console.log('Login Error: '+error)
+                    })
             }
         })
     }

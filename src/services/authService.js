@@ -1,11 +1,16 @@
 import axios from 'axios'
 
-const API = 'https://private-985be2-testapi4279.apiary-mock.com/api';
+//const API = 'https://private-985be2-testapi4279.apiary-mock.com/api';
+const API = 'https://json-server-jwt.herokuapp.com'
+const headers = {
+    'Content-Type' : 'application/json',
+    'Accept' : 'application/json'
+}
 
 class AuthService {
 
     login(credentials) {
-        return axios.post(API + '/login', credentials)    
+        return axios.post(API + '/login', credentials, { headers })    
     }
 
     getUserInfo() {
@@ -17,8 +22,7 @@ class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('userInfo');
-        return axios.post(API + '/logout', {})
+        localStorage.removeItem('userInfo');        
     }
 }
 
