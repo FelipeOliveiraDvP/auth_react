@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Alert } from 'antd';
 import { withRouter } from 'react-router-dom';
 
 import './style.css';
@@ -8,8 +8,19 @@ import AuthService from '../../services/authService'
 
 class LoginForm extends Component {
 
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            isSubmitting: false,
+            loginFail: false,
+            loginFailMessage: ''
+        }
+    }
+
     handleSubmit = e => {
         e.preventDefault()
+        this.setState({ isSubmitting: true, loginFail: false })
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const credentials = {
@@ -23,7 +34,11 @@ class LoginForm extends Component {
                             this.props.history.push('/home')
                         }
                     }).catch((error) => {
-                        console.log('Login Error: '+error)
+                        this.setState({
+                            isSubmitting: false,
+                            loginFail: true,
+                            loginFailMessage: 'Usuário ou senha inválidos!'
+                        })                        
                     })
             }
         })
@@ -40,6 +55,7 @@ class LoginForm extends Component {
                         <Input
                             prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
                             placeholder='Usuário'
+                            disabled={this.state.isSubmitting}
                         />
                     )}
                 </Form.Item>
@@ -51,6 +67,7 @@ class LoginForm extends Component {
                             prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
                             type='password'
                             placeholder='Senha'
+                            disabled={this.state.isSubmitting}
                         />
                     )}
                 </Form.Item>
@@ -67,6 +84,7 @@ class LoginForm extends Component {
                     </Button>
                     <a href='/register'>Criar uma nova conta</a>
                 </Form.Item>
+                {this.state.loginFail ? <Alert message={this.state.loginFailMessage} type='error' /> : null}
             </Form>
         );
     }
