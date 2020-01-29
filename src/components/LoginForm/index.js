@@ -7,22 +7,16 @@ import './style.css';
 import AuthService from '../../services/authService'
 
 class LoginForm extends Component {
-
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            isSubmitting: false,
-            loginFail: false,
-            loginFailMessage: ''
-        }
+    state = {
+        isSubmitting: false,
+        loginFail: false
     }
 
     handleSubmit = e => {
         e.preventDefault()
-        this.setState({ isSubmitting: true, loginFail: false })
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                this.setState({ isSubmitting: true, loginFail: false })
                 const credentials = {
                     email: values.username,
                     password: values.password
@@ -36,8 +30,7 @@ class LoginForm extends Component {
                     }).catch((error) => {
                         this.setState({
                             isSubmitting: false,
-                            loginFail: true,
-                            loginFailMessage: 'Usuário ou senha inválidos!'
+                            loginFail: true
                         })                        
                     })
             }
@@ -75,16 +68,21 @@ class LoginForm extends Component {
                     {getFieldDecorator('remember', {
                         valuePropName: 'checked',
                         initialValue: true
-                    })(<Checkbox>Lembrar de mim</Checkbox>)}
+                    })(<Checkbox disabled={this.state.isSubmitting}>Lembrar de mim</Checkbox>)}
                     <a href='/forgot' className='login-form-forgot'>
                         Esqueci minha senha
                     </a>
-                    <Button type='primary' htmlType='submit' className='login-form-button'>
+                    <Button 
+                        type='primary'
+                        htmlType='submit'
+                        className='login-form-button'
+                        loading={this.state.isSubmitting}
+                    >
                         Entrar
                     </Button>
                     <a href='/register'>Criar uma nova conta</a>
                 </Form.Item>
-                {this.state.loginFail ? <Alert message={this.state.loginFailMessage} type='error' /> : null}
+                {this.state.loginFail ? <Alert message='Usuário ou senha inválidos!' type='error' /> : null}
             </Form>
         );
     }
