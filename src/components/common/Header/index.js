@@ -37,14 +37,8 @@ class CustomHeader extends Component {
         return (
             <Header>
                 <Row>
-                    {/* Logo */}
-                    <Col span={6}>
-                        <div className='logo'>
-                            LOGO
-                        </div>
-                    </Col>
                     {/* Nav */}
-                    <Col span={17}>
+                    <Col span={23}>
                         <Menu
                             theme='dark'
                             mode='horizontal'
