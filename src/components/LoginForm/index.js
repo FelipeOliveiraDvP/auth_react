@@ -79,7 +79,12 @@ class LoginForm extends Component {
                     <a href='/forgot' className='login-form-forgot'>
                         Esqueci minha senha
                     </a>
-                    <Button type='primary' htmlType='submit' className='login-form-button'>
+                    <Button 
+                        type='primary'
+                        htmlType='submit'
+                        className='login-form-button'
+                        loading={this.state.isSubmitting}
+                    >
                         Entrar
                     </Button>
                     <a href='/register'>Criar uma nova conta</a>
