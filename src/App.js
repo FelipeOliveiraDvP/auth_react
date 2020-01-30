@@ -6,6 +6,7 @@ import PrivateRoute from './layouts/PrivateRoute'
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import PeoplePage from './pages/PeoplePage'
+import ProductionLinePage from './pages/ProductionLinePage'
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <Route exact={true} path='/' component={LoginPage} />
           <PrivateRoute path='/home' component={HomePage} />
           <PrivateRoute path='/people' component={PeoplePage} />
+          <PrivateRoute path='/productionLine' component={ProductionLinePage} />
         </Switch>
       </Router>
     )

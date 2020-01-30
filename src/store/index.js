@@ -1,13 +1,6 @@
 import { createStore } from 'redux';
+import productionLineReducer from '../reducers/productionLineReducer'
 
-const userInitialState = {
-    name: ''
-}
-
-const userReducer = (state = userInitialState, action) => {
-
-}
-
-const store = createStore(userReducer)
+const store = createStore(productionLineReducer)
 
 export default store
