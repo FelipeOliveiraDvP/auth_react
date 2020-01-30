@@ -1,38 +1,28 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
-import { Layout, Menu } from 'antd'
-import AuthService from '../../services/authService'
+import { Layout } from 'antd'
 
-const { Header, Content, Footer } = Layout
+import Header from '../../components/common/Header'
+import Footer from '../../components/common/Footer'
+import SideMenu from '../../components/common/SideMenu'
+
+const { Content } = Layout
 
 class MainLayout extends Component {
-
-    logout = e => {
-        AuthService.logout();
-        this.props.history.push('/')
-    }
 
     render() {
         return (
             <Layout className='layout'>
-                <Header>
-                    <Menu
-                        theme='dark'
-                        mode='horizontal'
-                        style={{ lineHeight: '64px' }}
-                    >
-                        <Menu.Item key='1' onClick={this.logout}>Logout 1</Menu.Item>
-                    </Menu>
-                </Header>
-                <Content>
-                    {this.props.children}
-                </Content>
-                <Footer>
-                    Footer
-                </Footer>
+                <SideMenu />
+                <Layout>
+                    <Header />                
+                    <Content style={{ backgroundColor: '#fff', padding: '10px' }}>
+                        {this.props.children}
+                    </Content>
+                    <Footer />
+                </Layout>                
             </Layout>
         );
     }
 }
 
-export default withRouter(MainLayout);
+export default MainLayout;
