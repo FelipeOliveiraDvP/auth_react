@@ -47,6 +47,15 @@ class SideMenu extends Component {
                             Pessoas
                         </span>
                     </Menu.Item>
+                    <Menu.Item key='3'>
+                        <Icon type='gold' />
+                        <span 
+                            className='nav-text'
+                            onClick={() => this.redirectTo('/productionLine', '3')}
+                        >
+                            Linha de Produção
+                        </span>
+                    </Menu.Item>
                 </Menu>
             </Sider>
         );
